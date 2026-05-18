@@ -1,82 +1,84 @@
-🧠 AI-Powered Mental Health Journal & Chatbot
+# 🧠 AI-Powered Mental Health Journal & Chatbot
 
-A modern full-stack web application designed to support mental wellness through journaling, mood tracking, sentiment analysis, and AI-powered emotional support conversations.
+A complete journaling, mood analysis, and AI chatbot support web application built using **Flask (Python)** and **React.js**.
 
-Built using:
+---
 
-⚛️ React.js for the frontend
-🐍 Flask (Python) for the backend
-🗄 SQLite for database management
-🤖 AI/NLP for chatbot and sentiment analysis
-📌 Overview
+# 📌 Overview
 
-The AI-Powered Mental Health Journal & Chatbot helps users maintain emotional well-being by providing a safe digital space to:
+The AI-Powered Mental Health Journal & Chatbot helps users maintain emotional wellness through journaling, mood tracking, sentiment analysis, and supportive AI conversations.
 
-✍️ Write daily journal entries
-📊 Analyze emotions using sentiment analysis
-😊 Track mood history over time
-🤖 Chat with an AI-powered supportive chatbot
-📈 View emotional insights in a dashboard
+Users can:
 
-The application combines Natural Language Processing (NLP) with a clean and interactive user interface to create a supportive mental wellness platform.
+- ✍️ Write daily journal entries
+- 😊 Analyze emotions using sentiment analysis
+- 📊 Track mood over time
+- 🤖 Chat with an AI-powered supportive chatbot
+- 📈 View emotional insights in a dashboard
 
-🚀 Features
-✍️ Daily Journaling
+The backend is developed using **Flask**, **SQLite**, and **NLP-based sentiment analysis**, while the frontend is built using **React.js**.
 
-Users can create and save personal journal entries securely.
+---
 
-🧠 Sentiment Analysis
+# 🚀 Features
 
-Each journal entry is analyzed to detect emotional tone such as:
+## ✍️ Daily Journal Entries
+Users can securely write and save personal journal entries.
 
-Positive 😊
-Neutral 😐
-Negative 😔
+## 🧠 Sentiment Analysis
+Each journal entry is analyzed to determine emotional tone:
 
-The backend calculates:
+- Positive 😊
+- Neutral 😐
+- Negative 😔
 
-Polarity
-Subjectivity
+The system calculates:
+- Polarity
+- Subjectivity
 
-using NLP techniques.
+## 🤖 AI Chatbot Support
+An AI-powered chatbot provides supportive and conversational responses.
 
-🤖 AI Chatbot Support
+## 📈 Mood Tracking Dashboard
+Users can visualize emotional trends and mood history over time.
 
-An AI chatbot provides supportive responses and conversational interaction for emotional support.
+## 💾 Database Storage
+All journal entries and sentiment results are stored using SQLite database.
 
-📈 Mood Tracking Dashboard
+---
 
-Visual insights allow users to monitor emotional patterns over time.
+# 🛠 Tech Stack
 
-💾 Persistent Data Storage
+| Technology | Purpose |
+|------------|----------|
+| React.js | Frontend UI |
+| Flask | Backend API |
+| SQLite | Database |
+| Axios | API Communication |
+| Python NLP Libraries | Sentiment Analysis |
+| OpenAI/GPT API | AI Chatbot |
 
-All journal entries and sentiment scores are stored using SQLite database.
+---
 
-🛠 Tech Stack
-Technology	Purpose
-React.js	Frontend UI
-Flask	Backend API
-SQLite	Database
-Axios	API Communication
-Python NLP Libraries	Sentiment Analysis
-OpenAI/GPT API	AI Chatbot
-📁 Project Structure
+# 📁 Project Structure
+
+```bash
 Mental health journal/
 │
 ├── backend/
-│   ├── app.py                 # Main Flask server
-│   ├── chatbot.py             # Chatbot logic
-│   ├── sentiment.py           # Sentiment analysis
-│   ├── models.py              # Database models
-│   └── requirements.txt       # Backend dependencies
+│   ├── app.py
+│   ├── chatbot.py
+│   ├── sentiment.py
+│   ├── models.py
+│   └── requirements.txt
 │
 ├── frontend/
 │   ├── public/
-│   │   └── index.html         # Main HTML file
+│   │   └── index.html
 │   │
 │   ├── src/
-│   │   ├── App.jsx            # Main React component
-│   │   ├── index.js           # React entry point
+│   │   ├── App.jsx
+│   │   ├── index.js
 │   │   └── components/
 │   │       ├── Chatbot.jsx
 │   │       ├── JournalEditor.jsx
@@ -85,22 +87,18 @@ Mental health journal/
 │   │
 │   └── package.json
 │
-├── generate_readme_pdf.py     # Optional PDF generator
+├── generate_readme_pdf.py
 └── README.md
+
 ⚙️ Backend Functionality
 
-The Flask backend provides REST APIs for handling journals, chatbot communication, and sentiment analysis.
+The Flask backend provides REST APIs for journaling, sentiment analysis, and chatbot communication.
 
 📮 API Endpoints
 POST /journal
-
-Saves a journal entry and performs sentiment analysis.
-
-Example Request
-{
-  "entry": "Today I felt calm and productive."
-}
+Saves a journal entry and returns sentiment analysis.
 Example Response
+
 {
   "message": "Entry saved",
   "sentiment": {
@@ -108,37 +106,27 @@ Example Response
     "subjectivity": 0.7
   }
 }
-GET /journals
 
+GET /journals
 Returns all saved journal entries.
 
 POST /chat
-
 Receives a user message and returns an AI-generated chatbot response.
 
-Example Request
-{
-  "message": "I feel stressed today."
-}
-Example Response
-{
-  "reply": "I'm sorry you're feeling stressed. Try taking a short break and focusing on your breathing."
-}
 🗄 Database Schema
-
-The application uses SQLite, a lightweight file-based database.
-
+The project uses SQLite database.
 Journal Table
-Field	Type	Description
-id	Integer	Primary Key
-entry	Text	Journal content
-polarity	Float	Sentiment polarity
-subjectivity	Float	Sentiment subjectivity
+
+| Field        | Type    | Description            |
+| ------------ | ------- | ---------------------- |
+| id           | Integer | Primary Key            |
+| entry        | Text    | Journal content        |
+| polarity     | Float   | Sentiment polarity     |
+| subjectivity | Float   | Sentiment subjectivity |
+
+
 ▶️ Running the Backend
 Step 1: Open Terminal
-
-Navigate to the backend folder:
-
 cd "C:\Users\rsama\Desktop\Mental health journal\backend"
 Step 2: Create Virtual Environment (Optional)
 python -m venv venv
@@ -147,110 +135,63 @@ Windows
 venv\Scripts\activate
 Step 4: Install Dependencies
 pip install -r requirements.txt
-Step 5: Run Flask Server
+Step 5: Run Flask Backend
 python app.py
+Backend will run at:  http://127.0.0.1:5000
 
-Backend will start at:
 
-http://127.0.0.1:5000
 ▶️ Running the Frontend
-Step 1: Navigate to Frontend
+Step 1: Navigate to Frontend Folder
 cd "C:\Users\rsama\Desktop\Mental health journal\frontend"
 Step 2: Install Dependencies
 npm install
-Step 3: Start React App
+Step 3: Run React Frontend
 npm start
+Frontend will run at: http://localhost:3000
 
-Frontend runs at:
 
-http://localhost:3000
-🔗 Frontend–Backend Integration
-
+🔗 Frontend–Backend Connection
 The React frontend communicates with Flask APIs using Axios.
-
 API Calls
 POST http://127.0.0.1:5000/chat
 POST http://127.0.0.1:5000/journal
 GET  http://127.0.0.1:5000/journals
+⚠️ Make sure the backend server is running before starting the frontend.
 
-⚠️ Ensure the Flask backend is running before starting the React frontend.
 
-🤖 Customizing Chatbot Responses
+🤖 Customizing Chatbot Replies
+Open:  backend/chatbot.py
 
-To modify chatbot behavior:
 
-Open:
-
-backend/chatbot.py
-
-Edit the function:
-
-def get_chat_response(message):
-
-You can customize:
-
-Tone of responses
-Personality style
-Advice patterns
-Keywords
-Emotional support templates
 📊 Sentiment Analysis
+The application uses NLP libraries such as:
+-TextBlob
+-NLTK
+-Transformers (optional)
+Sentiment analysis returns:
+-Polarity
+-Subjectivity
 
-The sentiment analysis module evaluates emotional tone using NLP libraries such as:
-
-TextBlob
-NLTK
-Transformers (optional)
-
-The analysis returns:
-
-Polarity
-Negative → -1
-Neutral → 0
-Positive → +1
-Subjectivity
-Objective → 0
-Subjective → 1
 🚀 Deployment Options
-🌐 Frontend Hosting
-▲ Vercel
-Netlify
-GitHub Pages
-⚙️ Backend Hosting
-Render
-Railway
-Deta
-🗄 Database Hosting
-SQLite (Local)
-Supabase PostgreSQL
+**Frontend Hosting**
+-Vercel
+-Netlify
+-GitHub Pages
+
+**Backend Hosting**
+-Render.com
+-Railway.app
+-Deta Space
+
+**Database Hosting**
+-SQLite
+-Supabase PostgreSQL
+
 🔒 Future Improvements
-
-Possible future enhancements include:
-
-🔐 User Authentication
-☁️ Cloud Database Integration
-📱 Mobile Responsive Design
-🧘 Meditation Recommendations
-📊 Advanced Mood Analytics
-🔔 Daily Reminder Notifications
-🎙 Voice-to-Text Journaling
-🌍 Multi-language Support
-📷 Application Modules
-Module	Description
-Journal Editor	Write and save personal thoughts
-Mood Tracker	Monitor emotional patterns
-Dashboard	Visualize mood insights
-Chatbot	AI emotional support assistant
-💡 Use Cases
-Personal emotional wellness tracking
-Mental health support companion
-NLP-based sentiment analysis learning
-Full-stack Flask + React portfolio project
-AI chatbot experimentation
-📜 License
-
-This project is open-source and available for educational and personal use.
-
-👨‍💻 Author
-
-Developed with ❤️ using Flask, React, and AI technologies.
+-User Authentication
+-Cloud Database Integration
+-Mood Analytics
+-Daily Reminders
+-Voice-to-Text Journaling
+-Multi-language Support
+-Meditation Recommendations

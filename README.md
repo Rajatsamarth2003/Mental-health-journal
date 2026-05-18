@@ -1,58 +1,106 @@
 🧠 AI-Powered Mental Health Journal & Chatbot
-A complete journaling, mood analysis, and chatbot support web application built using Flask (Python) and React (Frontend).
 
+A modern full-stack web application designed to support mental wellness through journaling, mood tracking, sentiment analysis, and AI-powered emotional support conversations.
+
+Built using:
+
+⚛️ React.js for the frontend
+🐍 Flask (Python) for the backend
+🗄 SQLite for database management
+🤖 AI/NLP for chatbot and sentiment analysis
 📌 Overview
 
-This project helps users maintain their mental wellness by allowing them to:
+The AI-Powered Mental Health Journal & Chatbot helps users maintain emotional well-being by providing a safe digital space to:
 
-Write daily journal entries
+✍️ Write daily journal entries
+📊 Analyze emotions using sentiment analysis
+😊 Track mood history over time
+🤖 Chat with an AI-powered supportive chatbot
+📈 View emotional insights in a dashboard
 
-Get sentiment analysis (positive/negative/neutral)
+The application combines Natural Language Processing (NLP) with a clean and interactive user interface to create a supportive mental wellness platform.
 
-Track their mood over time
+🚀 Features
+✍️ Daily Journaling
 
-Chat with an AI-powered supportive chatbot
+Users can create and save personal journal entries securely.
 
-View insights in a dashboard
+🧠 Sentiment Analysis
 
-The backend uses Flask, SQLite, NLP sentiment analysis, and an AI chatbot API.
-The frontend is built with React.
+Each journal entry is analyzed to detect emotional tone such as:
 
+Positive 😊
+Neutral 😐
+Negative 😔
+
+The backend calculates:
+
+Polarity
+Subjectivity
+
+using NLP techniques.
+
+🤖 AI Chatbot Support
+
+An AI chatbot provides supportive responses and conversational interaction for emotional support.
+
+📈 Mood Tracking Dashboard
+
+Visual insights allow users to monitor emotional patterns over time.
+
+💾 Persistent Data Storage
+
+All journal entries and sentiment scores are stored using SQLite database.
+
+🛠 Tech Stack
+Technology	Purpose
+React.js	Frontend UI
+Flask	Backend API
+SQLite	Database
+Axios	API Communication
+Python NLP Libraries	Sentiment Analysis
+OpenAI/GPT API	AI Chatbot
 📁 Project Structure
 Mental health journal/
 │
 ├── backend/
-│   ├── app.py               # Main Flask server
-│   ├── chatbot.py           # Chatbot logic
-│   ├── sentiment.py         # Sentiment analysis script
-│   ├── models.py            # Database models
-│   └── requirements.txt     # Backend dependencies
+│   ├── app.py                 # Main Flask server
+│   ├── chatbot.py             # Chatbot logic
+│   ├── sentiment.py           # Sentiment analysis
+│   ├── models.py              # Database models
+│   └── requirements.txt       # Backend dependencies
 │
 ├── frontend/
 │   ├── public/
-│   │   └── index.html       # Main HTML file
+│   │   └── index.html         # Main HTML file
+│   │
 │   ├── src/
-│   │   ├── App.jsx          # Main React Component
-│   │   ├── index.js         # React entry file
-│   │   └── components/      # UI components
+│   │   ├── App.jsx            # Main React component
+│   │   ├── index.js           # React entry point
+│   │   └── components/
 │   │       ├── Chatbot.jsx
 │   │       ├── JournalEditor.jsx
 │   │       ├── MoodTracker.jsx
 │   │       └── Dashboard.jsx
-│   ├── package.json
+│   │
+│   └── package.json
 │
-├── generate_readme_pdf.py   # Optional – generates README PDF
-└── README.md                # Project documentation
+├── generate_readme_pdf.py     # Optional PDF generator
+└── README.md
+⚙️ Backend Functionality
 
-⚙️ How the Backend Works
+The Flask backend provides REST APIs for handling journals, chatbot communication, and sentiment analysis.
 
-Your Flask backend exposes these routes:
-
+📮 API Endpoints
 POST /journal
 
-Saves a journal entry and returns sentiment score.
-Example response:
+Saves a journal entry and performs sentiment analysis.
 
+Example Request
+{
+  "entry": "Today I felt calm and productive."
+}
+Example Response
 {
   "message": "Entry saved",
   "sentiment": {
@@ -60,117 +108,149 @@ Example response:
     "subjectivity": 0.7
   }
 }
-
 GET /journals
 
-Returns all journal entries saved in the database.
+Returns all saved journal entries.
 
 POST /chat
 
-Receives user message → returns chatbot reply using GPT.
+Receives a user message and returns an AI-generated chatbot response.
 
-🗄 Database
+Example Request
+{
+  "message": "I feel stressed today."
+}
+Example Response
+{
+  "reply": "I'm sorry you're feeling stressed. Try taking a short break and focusing on your breathing."
+}
+🗄 Database Schema
 
-This project uses SQLite, a lightweight file-based database.
-Schema includes:
+The application uses SQLite, a lightweight file-based database.
 
-Journal table
+Journal Table
 Field	Type	Description
-id	Integer	Primary key
+id	Integer	Primary Key
 entry	Text	Journal content
 polarity	Float	Sentiment polarity
 subjectivity	Float	Sentiment subjectivity
-▶️ How to Run the Backend
-1. Open terminal in backend folder:
+▶️ Running the Backend
+Step 1: Open Terminal
+
+Navigate to the backend folder:
+
 cd "C:\Users\rsama\Desktop\Mental health journal\backend"
-
-2. (Optional) Create virtual environment
+Step 2: Create Virtual Environment (Optional)
 python -m venv venv
-
-3. Activate virtual environment
+Step 3: Activate Virtual Environment
+Windows
 venv\Scripts\activate
-
-4. Install dependencies
+Step 4: Install Dependencies
 pip install -r requirements.txt
-
-5. Run Flask backend
+Step 5: Run Flask Server
 python app.py
 
-
-Backend will run at:
+Backend will start at:
 
 http://127.0.0.1:5000
-
-▶️ How to Run the Frontend
-1. Enter frontend folder
+▶️ Running the Frontend
+Step 1: Navigate to Frontend
 cd "C:\Users\rsama\Desktop\Mental health journal\frontend"
-
-2. Install Node.js dependencies
+Step 2: Install Dependencies
 npm install
-
-3. Run frontend
+Step 3: Start React App
 npm start
-
 
 Frontend runs at:
 
 http://localhost:3000
+🔗 Frontend–Backend Integration
 
-🔗 Frontend–Backend Connection
+The React frontend communicates with Flask APIs using Axios.
 
-Your React app uses Axios to call:
-
+API Calls
 POST http://127.0.0.1:5000/chat
-
 POST http://127.0.0.1:5000/journal
+GET  http://127.0.0.1:5000/journals
 
-GET http://127.0.0.1:5000/journals
+⚠️ Ensure the Flask backend is running before starting the React frontend.
 
-Make sure backend is running before frontend.
+🤖 Customizing Chatbot Responses
 
-🤖 How to Modify Chatbot Replies
+To modify chatbot behavior:
 
 Open:
 
 backend/chatbot.py
 
-
-Inside:
+Edit the function:
 
 def get_chat_response(message):
 
+You can customize:
 
-Modify:
-
-Tone
-
-Personality
-
-Type of advice
-
+Tone of responses
+Personality style
+Advice patterns
 Keywords
+Emotional support templates
+📊 Sentiment Analysis
 
-Message templates
+The sentiment analysis module evaluates emotional tone using NLP libraries such as:
 
-🚀 Deployment (Free Options)
-Frontend:
+TextBlob
+NLTK
+Transformers (optional)
 
+The analysis returns:
+
+Polarity
+Negative → -1
+Neutral → 0
+Positive → +1
+Subjectivity
+Objective → 0
+Subjective → 1
+🚀 Deployment Options
+🌐 Frontend Hosting
+▲ Vercel
 Netlify
-
 GitHub Pages
+⚙️ Backend Hosting
+Render
+Railway
+Deta
+🗄 Database Hosting
+SQLite (Local)
+Supabase PostgreSQL
+🔒 Future Improvements
 
-Vercel
+Possible future enhancements include:
 
-Backend:
+🔐 User Authentication
+☁️ Cloud Database Integration
+📱 Mobile Responsive Design
+🧘 Meditation Recommendations
+📊 Advanced Mood Analytics
+🔔 Daily Reminder Notifications
+🎙 Voice-to-Text Journaling
+🌍 Multi-language Support
+📷 Application Modules
+Module	Description
+Journal Editor	Write and save personal thoughts
+Mood Tracker	Monitor emotional patterns
+Dashboard	Visualize mood insights
+Chatbot	AI emotional support assistant
+💡 Use Cases
+Personal emotional wellness tracking
+Mental health support companion
+NLP-based sentiment analysis learning
+Full-stack Flask + React portfolio project
+AI chatbot experimentation
+📜 License
 
-Render.com (best free Python hosting)
+This project is open-source and available for educational and personal use.
 
-Railway.app
+👨‍💻 Author
 
-Deta Space
-
-Database:
-
-SQLite (local)
-
-Supabase (free cloud PostgreSQL)
+Developed with ❤️ using Flask, React, and AI technologies.

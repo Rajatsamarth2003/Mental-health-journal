@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mental Health Journal — Demo</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0f1724;
+      --card: #0b1220aa;
+      --glass: rgba(255,255,255,0.03);
+      --accent: #7c3aed;
+      --accent-2: #06b6d4;
+      --muted: #9ca3af;
+      --glass-2: rgba(255,255,255,0.02);
+      --radius: 14px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#071022 0%, #071826 50%, #041220 100%);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:20px;
+      align-items:start;
+    }
+
+    header{
+      grid-column:1/-1;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:8px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:48px;height:48px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;align-items:center;justify-content:center;font-weight:700;
+      box-shadow:0 8px 30px rgba(0,0,0,0.6), inset 0 -6px 18px rgba(255,255,255,0.03);
+    }
+    .brand h1{font-size:18px;margin:0}
+    .brand p{margin:0;font-size:13px;color:var(--muted)}
+
+    .main{
+      display:grid;
+      gap:18px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    /* Journal */
+    textarea.journal{
+      width:100%; min-height:140px; resize:vertical;
+      padding:14px; border-radius:10px; border:1px solid rgba(255,255,255,0.04);
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+      color:inherit; outline:none; font-size:15px;
+    }
+    .controls{
+      display:flex; gap:12px; margin-top:10px; align-items:center;
+    }
+    .btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:white;border:none;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer;
+      box-shadow:0 8px 18px rgba(124,58,237,0.14);
+    }
+    .btn.secondary{
+      background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted); font-weight:600;
+    }
+
+    /* Mood */
+    .mood-track{
+      display:flex; gap:12px; align-items:center;
+      justify-content:space-between;
+    }
+    .mood-slider{
+      flex:1;margin:0 12px;
+    }
+    .mood-emoji{font-size:28px; width:56px; text-align:center}
+
+    /* Chat */
+    .chat-window{height:320px; overflow:auto; padding:12px; background:var(--glass-2); border-radius:10px;}
+    .bubble{max-width:86%; margin:8px 0; padding:10px 12px; border-radius:12px; line-height:1.35}
+    .bubble.you{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); align-self:flex-end;}
+    .bubble.bot{background:linear-gradient(90deg, rgba(255,255,255,0.015), rgba(255,255,255,0.02)); color:var(--muted)}
+
+    .chat-input{display:flex; gap:10px; margin-top:10px;}
+    .chat-input input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+
+    /* Right column */
+    .right{
+      display:grid; gap:18px;
+    }
+    .stats{
+      display:flex; gap:12px; justify-content:space-between; align-items:center;
+    }
+    .stat{
+      flex:1; padding:14px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); text-align:center;
+    }
+    .stat h3{margin:0;font-size:20px}
+    .stat p{margin:6px 0 0;color:var(--muted);font-size:13px}
+
+    /* Dashboard list */
+    .entry{padding:10px;border-radius:10px;background:var(--card); margin-bottom:10px}
+    .entry small{color:var(--muted)}
+
+    footer{grid-column:1/-1;margin-top:6px;color:var(--muted);font-size:13px;text-align:center}
+
+    @media(max-width:980px){
+      .container{grid-template-columns:1fr; padding:0 8px}
+      header{flex-direction:column;align-items:flex-start;gap:10px}
+      .right{order:3}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">MH</div>
+        <div>
+          <h1>Mental Health Journal</h1>
+          <p>Your safe place to write & reflect</p>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="color:var(--muted)">Local demo • No data sent anywhere</div>
+        <div style="font-size:12px;color:var(--muted)">Tip: Try writing about your day — mood will be auto-suggested</div>
+      </div>
+    </header>
+
+    <!-- left column -->
+    <div class="main">
+      <!-- Journal Card -->
+      <div class="card">
+        <h2 style="margin:0 0 10px 0">📔 Write your journal</h2>
+        <textarea id="journalText" class="journal" placeholder="Write anything — today’s thoughts, feelings or events..."></textarea>
+        <div class="controls">
+          <div style="display:flex;flex-direction:column">
+            <label style="font-size:13px;color:var(--muted)">Detected mood</label>
+            <div id="detectedMood" style="font-weight:700;color:var(--accent)">—</div>
+          </div>
+          <div style="margin-left:auto; display:flex; gap:10px;">
+            <button id="saveJournal" class="btn">Save Entry</button>
+            <button id="clearJournal" class="btn secondary">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mood Tracker -->
+      <div class="card" style="display:flex;flex-direction:column;">
+        <h2 style="margin:0 0 10px 0">😊 Mood Tracker</h2>
+        <div class="mood-track">
+          <div style="flex:0 0 64px; text-align:center;">
+            <div style="font-size:12px;color:var(--muted)">Today</div>
+            <div id="todayDate" style="font-weight:700"></div>
+          </div>
+          <div class="mood-emoji" id="moodEmoji">😐</div>
+          <input id="moodSlider" type="range" min="1" max="10" value="5" class="mood-slider">
+          <div style="width:90px;text-align:center"><div style="font-size:12px;color:var(--muted)">Value</div><div id="moodValue" style="font-weight:700">5</div></div>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:10px;align-items:center;">
+          <button id="saveMood" class="btn">Save Mood</button>
+          <button id="viewHistory" class="btn secondary">View Mood History</button>
+        </div>
+      </div>
+
+      <!-- Chatbot -->
+      <div class="card">
+        <h2 style="margin:0 0 10px 0">🤖 Chat — friendly support</h2>
+        <div id="chatWindow" class="chat-window" aria-live="polite"></div>
+        <div class="chat-input">
+          <input id="chatInput" placeholder="Say something (this demo uses canned responses)"/>
+          <button id="sendChat" class="btn">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- right column -->
+    <aside class="right">
+      <div class="card stats">
+        <div class="stat">
+          <h3 id="avgMood">—</h3>
+          <p>Average Mood</p>
+        </div>
+        <div class="stat">
+          <h3 id="entriesCount">0</h3>
+          <p>Journal Entries</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin:0 0 10px 0">📊 Dashboard</h3>
+        <canvas id="moodChart" width="400" height="140" style="width:100%;border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent)"></canvas>
+        <div style="margin-top:12px;">
+          <h4 style="margin:2px 0 8px 0">Recent entries</h4>
+          <div id="entriesList"></div>
+        </div>
+      </div>
+
+    </aside>
+
+    <footer>
+      Demo UI — replace canned chatbot with real backend for full functionality.
+    </footer>
+  </div>
+
+  <script>
+    // ---------- Utilities ----------
+    const $ = sel => document.querySelector(sel);
+    const ls = window.localStorage;
+
+    // ---------- Journal ----------
+    const journalText = $('#journalText');
+    const saveJournalBtn = $('#saveJournal');
+    const clearJournalBtn = $('#clearJournal');
+    const detectedMood = $('#detectedMood');
+    const entriesList = $('#entriesList');
+    const entriesCount = $('#entriesCount');
+    const avgMoodEl = $('#avgMood');
+
+    function loadEntries(){
+      return JSON.parse(ls.getItem('mh_journal_entries')||'[]');
+    }
+    function saveEntries(arr){
+      ls.setItem('mh_journal_entries', JSON.stringify(arr));
+    }
+
+    function detectMoodFromText(text){
+      // Simple keyword-based mood detection (demo). You can replace with NLP.
+      text = (text||'').toLowerCase();
+      if(!text.trim()) return {label:'Neutral', val:5};
+      const negative = ['sad','anxious','angry','depress','lonely','stress','stressed','worried','tired'];
+      const positive = ['happy','good','great','excited','joy','relaxed','calm','better','love'];
+      let score = 5;
+      negative.forEach(k=>{ if(text.includes(k)) score -= 1; });
+      positive.forEach(k=>{ if(text.includes(k)) score += 1; });
+      score = Math.min(9, Math.max(1, score));
+      const label = score>=7 ? 'Positive' : score<=3 ? 'Negative' : 'Neutral';
+      return {label, val:score};
+    }
+
+    function renderEntries(){
+      const entries = loadEntries().slice().reverse(); // newest first
+      entriesList.innerHTML = '';
+      entries.slice(0,6).forEach(e=>{
+        const d = new Date(e.ts);
+        const el = document.createElement('div');
+        el.className = 'entry';
+        el.innerHTML = `<div style="display:flex;justify-content:space-between"><small>${d.toLocaleString()}</small><small>mood:${e.mood}</small></div>
+                        <div style="margin-top:8px">${escapeHtml(e.text).slice(0,200)}</div>`;
+        entriesList.appendChild(el);
+      });
+      entriesCount.textContent = entries.length;
+      updateStats();
+    }
+
+    function escapeHtml(s){ return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+    saveJournalBtn.addEventListener('click', ()=>{
+      const text = journalText.value.trim();
+      if(!text){ alert('Write something first'); return; }
+      const mood = detectMoodFromText(text);
+      const entries = loadEntries();
+      entries.push({text, mood:mood.val, moodLabel:mood.label, ts: Date.now()});
+      saveEntries(entries);
+      journalText.value = '';
+      detectedMood.textContent = 'Saved — ' + mood.label + ' ('+mood.val+'/10)';
+      renderEntries();
+      drawChart();
+    });
+
+    clearJournalBtn.addEventListener('click', ()=>{ journalText.value=''; detectedMood.textContent='—'; });
+
+    journalText.addEventListener('input', ()=>{
+      const mood = detectMoodFromText(journalText.value);
+      detectedMood.textContent = mood.label + ' ('+mood.val+'/10)';
+    });
+
+    // ---------- Mood tracker ----------
+    const moodSlider = $('#moodSlider');
+    const moodEmoji = $('#moodEmoji');
+    const moodValue = $('#moodValue');
+    const saveMood = $('#saveMood');
+    const viewHistory = $('#viewHistory');
+    const moodChart = document.getElementById('moodChart');
+
+    function emojiFor(v){
+      v = Number(v);
+      if(v<=2) return '😢';
+      if(v<=4) return '😕';
+      if(v<=6) return '😐';
+      if(v<=8) return '🙂';
+      return '😁';
+    }
+
+    function loadMoods(){ return JSON.parse(ls.getItem('mh_moods')||'[]'); }
+    function saveMoods(arr){ ls.setItem('mh_moods', JSON.stringify(arr)); }
+
+    moodSlider.addEventListener('input', ()=>{
+      moodValue.textContent = moodSlider.value;
+      moodEmoji.textContent = emojiFor(moodSlider.value);
+    });
+
+    saveMood.addEventListener('click', ()=>{
+      const arr = loadMoods();
+      arr.push({v: Number(moodSlider.value), ts: Date.now()});
+      saveMoods(arr);
+      updateStats();
+      drawChart();
+      alert('Mood saved!');
+    });
+
+    viewHistory.addEventListener('click', ()=> {
+      const arr = loadMoods();
+      if(!arr.length) { alert('No mood history yet'); return; }
+      let s = arr.slice().reverse().slice(0,8).map(a => `${new Date(a.ts).toLocaleDateString()}: ${a.v}/10`).join('\n');
+      alert('Recent moods:\n\n' + s);
+    });
+
+    // ---------- Chat (demo canned responses) ----------
+    const chatWindow = $('#chatWindow');
+    const chatInput = $('#chatInput');
+    const sendChat = $('#sendChat');
+
+    const canned = [
+      "I hear you. Want to tell me more about that?",
+      "That sounds tough — you're not alone in feeling this way.",
+      "Try taking three deep breaths with me. Inhale... exhale...",
+      "Small steps are still progress. What's one tiny thing you can do now?",
+      "It’s okay to rest. What helps you relax usually?"
+    ];
+
+    function pushChat(who, text){
+      const div = document.createElement('div');
+      div.className = 'bubble ' + (who==='you' ? 'you' : 'bot');
+      div.style.alignSelf = (who==='you' ? 'flex-end' : 'flex-start');
+      div.innerText = text;
+      chatWindow.appendChild(div);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    sendChat.addEventListener('click', ()=>{
+      const t = chatInput.value.trim(); if(!t) return;
+      pushChat('you', t);
+      chatInput.value = '';
+      // simulate bot
+      setTimeout(()=> {
+        const r = canned[Math.floor(Math.random()*canned.length)];
+        pushChat('bot', r);
+      }, 700);
+    });
+
+    chatInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') sendChat.click(); });
+
+    // ---------- Chart drawing ----------
+    function drawChart(){
+      const ctx = moodChart.getContext('2d');
+      const widths = moodChart.width = moodChart.clientWidth * devicePixelRatio;
+      const heights = moodChart.height = moodChart.clientHeight * devicePixelRatio;
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+      ctx.clearRect(0,0,moodChart.clientWidth, moodChart.clientHeight);
+
+      const moods = loadMoods();
+      const entries = loadEntries();
+
+      const data = moods.slice(-12); // last 12
+      if(data.length===0){ 
+        ctx.fillStyle = 'rgba(255,255,255,0.03)';
+        ctx.fillRect(0,0,moodChart.clientWidth, moodChart.clientHeight);
+        ctx.fillStyle = 'var(--muted)';
+        ctx.font = '12px Inter';
+        ctx.fillText('No mood data yet — save moods to see trends',14,26);
+        updateStats();
+        return;
+      }
+
+      const w = moodChart.clientWidth, h = moodChart.clientHeight, pad = 24;
+      const step = (w - pad*2) / (data.length - 1 || 1);
+      // background grid
+      ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+      ctx.lineWidth = 1;
+      for(let i=0;i<5;i++){
+        const y = pad + (h - pad*2) * i/4;
+        ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(w-pad, y); ctx.stroke();
+      }
+      // path
+      ctx.beginPath();
+      data.forEach((d, i)=>{
+        const x = pad + step * i;
+        const y = pad + (h - pad*2) * (1 - (d.v-1)/9);
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      });
+      ctx.strokeStyle = 'rgba(124,58,237,0.95)';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // points
+      data.forEach((d,i)=>{
+        const x = pad + step * i;
+        const y = pad + (h - pad*2) * (1 - (d.v-1)/9);
+        ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2); ctx.fillStyle = 'white'; ctx.fill();
+      });
+
+      // labels
+      ctx.fillStyle = 'var(--muted)';
+      ctx.font = '12px Inter';
+      ctx.fillText('Mood trend (last ' + data.length + ' saves)', 14, 14);
+      updateStats();
+    }
+
+    function updateStats(){
+      const moods = loadMoods();
+      const entries = loadEntries();
+      const avg = moods.length ? (moods.reduce((s,a)=>s+a.v,0)/moods.length).toFixed(2) : '—';
+      avgMoodEl.textContent = moods.length ? avg : '—';
+      entriesCount.textContent = entries.length;
+    }
+
+    // ---------- Init ----------
+    function init(){
+      // set today date
+      $('#todayDate').textContent = new Date().toLocaleDateString();
+      // init mood UI
+      moodSlider.dispatchEvent(new Event('input'));
+      // render saved entries
+      renderEntries();
+      drawChart();
+      // welcome chat
+      pushChat('bot', "Hi — I'm your friendly check-in bot. How are you feeling today?");
+    }
+    window.addEventListener('resize', ()=>{ drawChart(); });
+
+    init();
+  </script>
+</body>
+</html>
